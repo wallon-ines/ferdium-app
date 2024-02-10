@@ -10,6 +10,7 @@ import languageDetect from './languageDetect';
 import dnd from './dnd';
 import focusState from './focusState';
 import TrayIcon from '../../lib/Tray';
+import browserViewManager from './browserViewManager';
 
 export default (params: {
   mainWindow: BrowserWindow;
@@ -26,4 +27,5 @@ export default (params: {
   languageDetect();
   dnd();
   focusState(params);
+  browserViewManager(params);
 };

@@ -10,6 +10,7 @@ import {
   session,
   dialog,
   desktopCapturer,
+  shell,
 } from 'electron';
 
 import { emptyDirSync, ensureFileSync } from 'fs-extra';
@@ -46,7 +47,7 @@ import { appId } from './package.json';
 import './electron/exception';
 
 import { asarPath } from './helpers/asar-helpers';
-import { openExternalUrl } from './helpers/url-helpers';
+import { openExternalUrl, isValidExternalURL } from './helpers/url-helpers';
 import userAgent from './helpers/userAgent-helpers';
 import { translateTo } from './helpers/translation-helpers';
 import { darkThemeGrayDarkest } from './themes/legacy';
@@ -392,6 +393,14 @@ const createWindow = () => {
     }
   });
 
+  mainWindow.webContents.on('new-window', (e, url) => {
+    debug('Open url', url);
+    e.preventDefault();
+
+    if (isValidExternalURL(url)) {
+      shell.openExternal(url);
+    }
+  });
   if (isMac) {
     import('./electron/macOSPermissions').then(macOSPermissions => {
       const { askFormacOSPermissions } = macOSPermissions;

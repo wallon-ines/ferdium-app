@@ -4,6 +4,10 @@ import ms from 'ms';
 
 export const DEFAULT_ACCENT_COLOR = '#7367F0';
 
+export const TAB_BAR_WIDTH = 68;
+
+export const TODOS_RECIPE_ID = 'franz-todos';
+
 export const CHECK_INTERVAL = ms('1h'); // How often should we perform checks
 
 export const LOCAL_HOSTNAME = 'localhost';

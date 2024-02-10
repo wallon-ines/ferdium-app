@@ -101,6 +101,9 @@ dependencies:
   electron-dl:
     specifier: 3.5.2
     version: 3.5.2
+  electron-fetch:
+    specifier: 1.3.0
+    version: 1.3.0
   electron-find:
     specifier: 1.0.7
     version: 1.0.7
@@ -5751,6 +5754,13 @@ packages:
       unused-filename: 2.1.0
     dev: false
 
+  /electron-fetch@1.3.0:
+    resolution: {integrity: sha512-WzHnWZqKdiCKHqqHu+GphezoWRSUVH6BQ/f13vu16VwYKJRZNt2dUrx40eZJcyZcDGn6RJDTAHS6jVoHoglgNw==}
+    engines: {node: '>=6'}
+    dependencies:
+      encoding: 0.1.13
+    dev: false
+
   /electron-find@1.0.7:
     resolution: {integrity: sha512-C2FQJuk8567P2a2loBNwl5c8kwOTQVMB0capgHtPI7zKwZG16X0UxG+sNYZExQfnJ0PA+ecECA/4LcXxQa2TCA==}
     dev: false
@@ -5854,7 +5864,6 @@ packages:
     dependencies:
       iconv-lite: 0.6.3
     dev: false
-    optional: true
 
   /end-of-stream@1.4.4:
     resolution: {integrity: sha512-+uw1inIHVPQoaVuHzRyXd21icM+cnt4CzD5rW+NC1wjOUSTOs+Te7FOv7AhN7vS9x/oIyhLP5PR1H+phQAHu5Q==}

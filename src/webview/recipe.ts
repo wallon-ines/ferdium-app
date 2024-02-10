@@ -86,7 +86,7 @@ window.open = (url, frameName, features): WindowProxy | null => {
           originalWindowOpen(newWindow.location.href, frameName, features);
         } else {
           // Open the new URL
-          ipcRenderer.sendToHost('new-window', newWindow.location.href);
+          ipcRenderer.send('new-window', newWindow.location.href);
         }
         clearInterval(checkInterval);
       }
@@ -102,7 +102,7 @@ window.open = (url, frameName, features): WindowProxy | null => {
 
   // We need to differentiate if the link should be opened in a popup or in the systems default browser
   if (!frameName && !features && typeof features !== 'string') {
-    ipcRenderer.sendToHost('new-window', url);
+    ipcRenderer.send('new-window', url);
     return null;
   }
 

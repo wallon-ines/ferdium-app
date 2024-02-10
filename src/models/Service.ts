@@ -134,6 +134,8 @@ export default class Service {
 
   @observable isMediaPlaying: boolean = false;
 
+  @observable webContentsId = null;
+
   @action _setAutoRun() {
     if (!this.isEnabled) {
       this.webview = null;
@@ -489,7 +491,10 @@ export default class Service {
       this._didLoad();
     };
 
-    this.webview.addEventListener('did-frame-finish-load', didLoad.bind(this));
+    this.webview.addEventListener('did-frame-finish-load', event => {
+      debug('did-frame-finish-load', this.name, event);
+      didLoad();
+    });
     this.webview.addEventListener('did-navigate', didLoad.bind(this));
 
     this.webview.addEventListener('did-fail-load', event => {

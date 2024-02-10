@@ -138,6 +138,7 @@ export default class ServicesStore extends TypedStore {
     );
 
     this.registerReactions([
+      this._shareServiceConfigWithBrowserViewManager.bind(this),
       this._focusServiceReaction.bind(this),
       this._getUnreadMessageCountReaction.bind(this),
       this._mapActiveServiceToServiceModelReaction.bind(this),
@@ -738,6 +739,49 @@ export default class ServicesStore extends TypedStore {
         service.initializeWebViewListener();
       }
       service.isAttached = true;
+    }
+  }
+
+  async _shareServiceConfigWithBrowserViewManager() {
+    if (
+      !this.stores.user.isLoggedIn ||
+      this.stores.router.location.pathname.includes(this.stores.user.BASE_ROUTE)
+    )
+      return;
+
+    const sharedServiceData = this.allDisplayed
+      .filter(service => service.isEnabled)
+      .map(service => ({
+        id: service.id,
+        name: service.name,
+        url: service.url,
+        partition: service.partition,
+        state: {
+          isActive: service.isActive,
+          spellcheckerLanguage: service.spellcheckerLanguage,
+          isSpellcheckerEnabled: this.stores.settings.app.enableSpellchecking,
+          isDarkModeEnabled: service.isDarkModeEnabled,
+          team: service.team,
+          hasCustomIcon: service.hasCustomIcon,
+          isRestricted: service.isServiceAccessRestricted,
+          isHibernating: service.isHibernating,
+        },
+        recipeId: service.recipe.id,
+      }));
+
+    const data = await ipcRenderer.invoke(
+      'browserViewManager',
+      sharedServiceData,
+    );
+    for (const browserViewHandler of data) {
+      const service = this.one(browserViewHandler.serviceId);
+      if (service) {
+        debug(
+          `Setting webContentsId for ${service.name} to`,
+          browserViewHandler.webContentsId,
+        );
+        service.webContentsId = browserViewHandler.webContentsId;
+      }
     }
   }
 

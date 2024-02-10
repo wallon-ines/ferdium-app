@@ -128,7 +128,6 @@ export default class TodoStore extends FeatureStore {
           todoActions.toggleTodosFeatureVisibility,
           this._toggleTodosFeatureVisibility,
         ],
-        [todoActions.openDevTools, this._openDevTools],
         [todoActions.reload, this._reload],
       ]),
     );
@@ -233,15 +232,6 @@ export default class TodoStore extends FeatureStore {
       isFeatureEnabledByUser: isFeatureEnabled,
       isTodosPanelVisible: isFeatureEnabled,
     });
-  };
-
-  _openDevTools = () => {
-    debug('_openDevTools');
-
-    const webview = document.querySelector<Webview>('#todos-panel webview');
-    if (webview) {
-      webview.openDevTools();
-    }
   };
 
   _reload = () => {
